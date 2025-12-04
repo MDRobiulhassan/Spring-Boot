@@ -38,7 +38,7 @@ public class EmployeeService {
         return employeeEntities.stream().map(employeeEntity -> modelMapper.map(employeeEntity,EmployeeDTO.class)).collect(Collectors.toList());
     }
 
-    public EmployeeDTO createEmployee(EmployeeEntity inputEmployee) {
+    public EmployeeDTO createEmployee(EmployeeDTO inputEmployee) {
         EmployeeEntity toSaveEntity = modelMapper.map(inputEmployee, EmployeeEntity.class);
         EmployeeEntity savedEmployeeEntity = employeeRepository.save(toSaveEntity);
         return modelMapper.map(savedEmployeeEntity, EmployeeDTO.class);

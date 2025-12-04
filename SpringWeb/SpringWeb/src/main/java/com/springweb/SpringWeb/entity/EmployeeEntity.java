@@ -24,4 +24,5 @@ public class EmployeeEntity {
     private Integer age;
     private LocalDate joinDate;
     private Boolean isActive;
+    private String role;
 }

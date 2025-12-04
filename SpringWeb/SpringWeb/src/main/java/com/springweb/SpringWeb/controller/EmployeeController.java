@@ -3,14 +3,13 @@ package com.springweb.SpringWeb.controller;
 import com.springweb.SpringWeb.Service.EmployeeService;
 import com.springweb.SpringWeb.dto.EmployeeDTO;
 import com.springweb.SpringWeb.entity.EmployeeEntity;
-import com.springweb.SpringWeb.repository.EmployeeRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -35,13 +34,13 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeEntity inputEmployee){
+    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody @Valid EmployeeDTO inputEmployee){
         EmployeeDTO employeeDTO = employeeService.createEmployee(inputEmployee);
         return new ResponseEntity<>(employeeDTO,HttpStatus.CREATED);
     }
 
     @PutMapping("{employeeId}")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody EmployeeDTO employeeDTO,@PathVariable Long employeeId){
+    public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody @Valid EmployeeDTO employeeDTO,@PathVariable Long employeeId){
         return ResponseEntity.ok(employeeService.updateEmployee(employeeId,employeeDTO));
     }
 
