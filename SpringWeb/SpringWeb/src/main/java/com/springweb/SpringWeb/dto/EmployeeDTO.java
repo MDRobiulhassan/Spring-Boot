@@ -28,7 +28,7 @@ public class EmployeeDTO {
     @Max(80)
     private Integer age;
 
-    @PastOrPresent
+    @PastOrPresent(message = "Joining Date Must be Past or Present")
     private LocalDate joinDate;
 
     private Boolean isActive;

@@ -2,7 +2,7 @@ package com.springweb.SpringWeb.controller;
 
 import com.springweb.SpringWeb.Service.EmployeeService;
 import com.springweb.SpringWeb.dto.EmployeeDTO;
-import com.springweb.SpringWeb.entity.EmployeeEntity;
+import com.springweb.SpringWeb.exceptions.ResourceNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -25,7 +26,7 @@ public class EmployeeController {
     @GetMapping("/{employeeId}")
     public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable(name="employeeId")  Long id){
         Optional<EmployeeDTO> employeeDTO = employeeService.getEmployeeById(id);
-        return employeeDTO.map(employeeDTO1 -> ResponseEntity.ok(employeeDTO1)).orElse(ResponseEntity.notFound().build());
+        return employeeDTO.map(employeeDTO1 -> ResponseEntity.ok(employeeDTO1)).orElseThrow(()->new ResourceNotFoundException("Employee Not Found with id "+id));
     }
 
     @GetMapping
@@ -45,7 +46,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{employeeId}")
-    public ResponseEntity<Boolean> deleteEmployee(@PathVariable Long employeeId){
+    public ResponseEntity<EmployeeDTO> deleteEmployee(@PathVariable Long employeeId){
         boolean deleted = employeeService.deleteEmployee(employeeId);
         if(deleted)
             return ResponseEntity.ok().build();

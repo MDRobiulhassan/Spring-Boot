@@ -2,6 +2,7 @@ package com.springweb.SpringWeb.Service;
 
 import com.springweb.SpringWeb.dto.EmployeeDTO;
 import com.springweb.SpringWeb.entity.EmployeeEntity;
+import com.springweb.SpringWeb.exceptions.ResourceNotFoundException;
 import com.springweb.SpringWeb.repository.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.util.ReflectionUtils;
@@ -26,7 +27,10 @@ public class EmployeeService {
     }
 
     public boolean isExists(@PathVariable Long employeeId){
-        return employeeRepository.existsById(employeeId);
+        boolean exists = employeeRepository.existsById(employeeId);
+        if(!exists)
+            throw  new ResourceNotFoundException("Employee not found id : " + employeeId);
+        return true;
     }
 
     public Optional<EmployeeDTO> getEmployeeById(Long id) {
@@ -45,6 +49,8 @@ public class EmployeeService {
     }
 
     public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) {
+        isExists(id);
+
         EmployeeEntity employeeEntity = modelMapper.map(employeeDTO, EmployeeEntity.class);
         employeeEntity.setId(id);
         EmployeeEntity savedEmployeeEntity = employeeRepository.save(employeeEntity);
@@ -52,17 +58,13 @@ public class EmployeeService {
     }
 
     public boolean deleteEmployee(Long employeeId) {
-        boolean exists = isExists(employeeId);
-        if(!exists)
-            return false;
+        isExists(employeeId);
         employeeRepository.deleteById(employeeId);
         return true;
     }
 
     public EmployeeDTO updatePartialEmployee(Map<String, Object> updates, Long employeeId) {
-        boolean exists = isExists(employeeId);
-        if(!exists)
-            return null;
+        isExists(employeeId);
         EmployeeEntity employeeEntity = employeeRepository.findById(employeeId).get();
         updates.forEach((field, value) -> {
             Field fieldToBeUpdated = ReflectionUtils.findField(EmployeeEntity.class, field);
