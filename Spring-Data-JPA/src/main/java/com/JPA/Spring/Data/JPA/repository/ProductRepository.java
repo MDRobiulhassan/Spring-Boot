@@ -1,6 +1,9 @@
 package com.JPA.Spring.Data.JPA.repository;
 
 import com.JPA.Spring.Data.JPA.entity.ProductEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -37,5 +40,11 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
             WHERE DATE(p.createdAt) = :date
             """)
     List<ProductEntity> findByCreatedDate(@Param("date") LocalDate date);
+
+
+    List<ProductEntity> findAllByOrderByTitle();
+    List<ProductEntity> findBy(Sort sortBy);
+
+
 
 }
