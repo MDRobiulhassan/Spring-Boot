@@ -3,7 +3,6 @@ package com.hospital.HospitalManagement;
 import com.hospital.HospitalManagement.Repository.PatientRepository;
 import com.hospital.HospitalManagement.dto.BloodGroupStats;
 import com.hospital.HospitalManagement.dto.PatientDTO;
-import com.hospital.HospitalManagement.entity.PatientEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

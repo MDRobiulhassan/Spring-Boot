@@ -6,13 +6,15 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@ToString
-@Table(name="patient")
-public class PatientEntity {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +30,10 @@ public class PatientEntity {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @OneToOne
+    private Insurance insurance;
+
+    @OneToMany(mappedBy = "patient")
+    private Set<Appointment> appointment = new HashSet<>();
 }
