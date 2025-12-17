@@ -31,7 +31,7 @@ public class Patient {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Insurance insurance;
 
     @OneToMany(mappedBy = "patient")
