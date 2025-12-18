@@ -22,4 +22,11 @@ public class InsuranceService {
         insurance.setPatient(patient);
         return insurance;
     }
+
+    @Transactional
+    public Patient deleteInsurance(Long patientId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow();
+        patient.setInsurance(null);
+        return patient;
+    }
 }

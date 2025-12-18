@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AppointmentService {
@@ -35,5 +37,11 @@ public class AppointmentService {
     @Transactional
     public void deleteAppointment(Long appointmentId) {
         appointmentRepository.deleteById(appointmentId);
+    }
+
+    @Transactional
+    public List<Appointment> getAllAppointments() {
+        List<Appointment> appointments = appointmentRepository.findAll();
+        return appointments;
     }
 }

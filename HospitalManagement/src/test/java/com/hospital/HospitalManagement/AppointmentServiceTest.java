@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 
 @SpringBootTest
 public class AppointmentServiceTest {
@@ -26,8 +27,17 @@ public class AppointmentServiceTest {
         System.out.println(createdAppointment);
     }
 
+//    @Test
+//    public void deleteAppointment() {
+//        appointmentService.deleteAppointment(1L);
+//    }
+
     @Test
-    public void deleteAppointment() {
-        appointmentService.deleteAppointment(1L);
+    public void getAllAppointments() {
+        List<Appointment> appointments = appointmentService.getAllAppointments();
+
+        for (Appointment appointment : appointments) {
+            System.out.println(appointment);
+        }
     }
 }
