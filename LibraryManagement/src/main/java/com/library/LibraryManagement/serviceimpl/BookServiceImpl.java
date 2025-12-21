@@ -30,15 +30,13 @@ public class BookServiceImpl {
                 .orElseThrow(() -> new RuntimeException("Author not found"));
 
         Book book = modelMapper.map(dto, Book.class);
-
+        book.setId(null);
+        book.setPublishDate(dto.getPublishedDate());
         book.setAuthor(author);
 
         Book savedBook = bookRepository.save(book);
 
         return modelMapper.map(savedBook, BookResponseDTO.class);
     }
-
-
-
 
 }

@@ -22,6 +22,7 @@ public class Book {
     @Column(nullable = false)
     LocalDate publishDate;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id")
     private Author author;
 }
