@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AuthorServiceImpl {
 
@@ -25,5 +27,12 @@ public class AuthorServiceImpl {
         Author author = modelMapper.map(authorRequestDTO, Author.class);
         Author saved = authorRepository.save(author);
         return modelMapper.map(saved, AuthorResponseDTO.class);
+    }
+
+    @Transactional
+    public List<AuthorResponseDTO> getAllAuthors() {
+        List<Author> authors = authorRepository.findAll();
+        return authors.stream().map(
+                author -> modelMapper.map(author, AuthorResponseDTO.class)).toList();
     }
 }

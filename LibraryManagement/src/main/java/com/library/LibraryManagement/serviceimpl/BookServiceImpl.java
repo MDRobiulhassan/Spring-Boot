@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookServiceImpl {
 
@@ -37,6 +39,13 @@ public class BookServiceImpl {
         Book savedBook = bookRepository.save(book);
 
         return modelMapper.map(savedBook, BookResponseDTO.class);
+    }
+
+    @Transactional
+    public List<BookResponseDTO> getAllBooks() {
+        List<Book> books = bookRepository.findAll();
+        return books.stream().
+                map(book -> modelMapper.map(book,BookResponseDTO.class)).toList();
     }
 
 }
