@@ -35,4 +35,10 @@ public class AuthorServiceImpl {
         return authors.stream().map(
                 author -> modelMapper.map(author, AuthorResponseDTO.class)).toList();
     }
+
+    @Transactional
+    public AuthorResponseDTO getAuthorById(Long id) {
+        Author author = authorRepository.findById(id).orElse(null);
+        return modelMapper.map(author, AuthorResponseDTO.class);
+    }
 }

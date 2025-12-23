@@ -25,8 +25,13 @@ public class BookController {
         return new ResponseEntity<>(bookService.createBook(bookRequestDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/book")
     public ResponseEntity<?> getAllBooks() {
         return new ResponseEntity<>(bookService.getAllBooks(), HttpStatus.OK);
+    }
+
+    @GetMapping("/book/{id}")
+    public ResponseEntity<?> getBookById(@RequestParam Long id) {
+        return new ResponseEntity<>(bookService.getBookById(id), HttpStatus.OK);
     }
 }

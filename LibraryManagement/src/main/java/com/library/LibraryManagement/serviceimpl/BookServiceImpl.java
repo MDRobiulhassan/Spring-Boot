@@ -9,6 +9,7 @@ import com.library.LibraryManagement.repository.BookRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -46,6 +47,12 @@ public class BookServiceImpl {
         List<Book> books = bookRepository.findAll();
         return books.stream().
                 map(book -> modelMapper.map(book,BookResponseDTO.class)).toList();
+    }
+
+    @Transactional
+    public BookResponseDTO getBookById(Long id) {
+        Book book = bookRepository.findById(id).orElse(null);
+        return modelMapper.map(book, BookResponseDTO.class);
     }
 
 }
