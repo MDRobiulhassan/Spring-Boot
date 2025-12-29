@@ -1,6 +1,7 @@
 package com.example.SpringSecurity.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,11 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class User implements UserDetails {
 
     @Id
