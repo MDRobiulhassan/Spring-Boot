@@ -21,7 +21,7 @@ class SpringSecurityApplicationTests {
                 .build();
 
 
-        String token = jwtService.generateToken(user);
+        String token = jwtService.generateAccessToken(user);
         System.out.println(token);
 
         Long userId = jwtService.getUserIdByToken(token);

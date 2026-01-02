@@ -1,6 +1,7 @@
 package com.example.SpringSecurity.service;
 
 import com.example.SpringSecurity.dto.LoginDTO;
+import com.example.SpringSecurity.dto.LoginResponseDTO;
 import com.example.SpringSecurity.dto.SignupDTO;
 import com.example.SpringSecurity.dto.UserDTO;
 import com.example.SpringSecurity.entity.User;
@@ -25,6 +26,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final jwtService jwtService;
+    private final UserService userService;
 
     public UserDTO signUp(SignupDTO signupDTO) {
         Optional<User> user = userRepository.findByEmail(signupDTO.getEmail());
@@ -41,12 +43,23 @@ public class AuthService {
         return modelMapper.map(savedUser, UserDTO.class);
     }
 
-    public String login(LoginDTO loginDTO) {
+    public LoginResponseDTO login(LoginDTO loginDTO) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword())
         );
 
         User user = (User) authentication.getPrincipal();
-        return jwtService.generateToken(user);
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
+
+        return new LoginResponseDTO(user.getId(),accessToken,refreshToken);
+    }
+
+    public LoginResponseDTO refreshToken(String refreshToken) {
+        Long userId = jwtService.getUserIdByToken(refreshToken);
+        User user = userService.getUserById(userId);
+
+        String accessToken = jwtService.generateAccessToken(user);
+        return new LoginResponseDTO(user.getId(),accessToken,refreshToken);
     }
 }
