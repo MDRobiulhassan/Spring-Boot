@@ -6,4 +6,10 @@ spring:
           google:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
+          github:
+            client-id: abcsd
+            client-secret: adasv
+          facebook:
+            client-id: sdsfd
+            client-secret: dfasfaf
 
