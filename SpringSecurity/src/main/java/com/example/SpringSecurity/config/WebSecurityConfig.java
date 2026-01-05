@@ -62,23 +62,6 @@ public class WebSecurityConfig {
         return config.getAuthenticationManager();
     }
 
-//    @Bean
-//    UserDetailsService inMemoryUserDetailsService() {
-//        UserDetails user = User
-//                .withUsername("user")
-//                .password(passwordEncoder().encode("1234"))
-//                .roles("USER")
-//                .build();
-//        UserDetails admin = User
-//                .withUsername("admin")
-//                .password(passwordEncoder().encode("1234"))
-//                .roles("ADMIN")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
-
-
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
