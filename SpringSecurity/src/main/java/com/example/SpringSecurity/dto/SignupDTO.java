@@ -1,10 +1,14 @@
 package com.example.SpringSecurity.dto;
 
+import com.example.SpringSecurity.entity.enums.Role;
 import lombok.Data;
+
+import java.util.Set;
 
 @Data
 public class SignupDTO {
-    String name;
-    String email;
-    String password;
+    private String name;
+    private String email;
+    private String password;
+    private Set<Role> roles;
 }
