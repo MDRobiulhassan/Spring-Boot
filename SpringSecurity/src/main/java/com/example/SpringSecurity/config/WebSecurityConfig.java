@@ -18,8 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.example.SpringSecurity.entity.enums.Role.ADMIN;
-import static com.example.SpringSecurity.entity.enums.Role.CREATOR;
+import static com.example.SpringSecurity.entity.enums.Permission.*;
+import static com.example.SpringSecurity.entity.enums.Role.*;
 
 @Configuration
 @EnableWebSecurity
@@ -54,6 +54,10 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/posts/**").hasAnyRole(ADMIN.name(), CREATOR.name())
                         .requestMatchers(HttpMethod.PUT, "/posts/**").hasAnyRole(ADMIN.name(), CREATOR.name())
                         .requestMatchers(HttpMethod.DELETE, "/posts/**").hasAnyRole(ADMIN.name(), CREATOR.name())
+                        .requestMatchers(HttpMethod.GET, "/posts/**").hasAuthority(POST_CREATE.name()) // anyone can read
+                        .requestMatchers(HttpMethod.POST, "/posts/**").hasAnyAuthority(POST_CREATE.name())
+                        .requestMatchers(HttpMethod.PUT, "/posts/**").hasAnyAuthority(POST_UPDATE.name())
+                        .requestMatchers(HttpMethod.DELETE, "/posts/**").hasAnyAuthority(POST_DELETE.name())
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
