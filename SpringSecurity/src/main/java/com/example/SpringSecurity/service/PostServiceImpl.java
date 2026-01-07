@@ -2,11 +2,13 @@ package com.example.SpringSecurity.service;
 
 import com.example.SpringSecurity.dto.PostDTO;
 import com.example.SpringSecurity.entity.PostEntity;
+import com.example.SpringSecurity.entity.User;
 import com.example.SpringSecurity.exception.ResourceNotFoundException;
 import com.example.SpringSecurity.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +32,9 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostDTO createNewPost(PostDTO inputPost) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         PostEntity postEntity = modelMapper.map(inputPost, PostEntity.class);
+        postEntity.setAuthor(user);
         return modelMapper.map(postRepository.save(postEntity), PostDTO.class);
     }
 
