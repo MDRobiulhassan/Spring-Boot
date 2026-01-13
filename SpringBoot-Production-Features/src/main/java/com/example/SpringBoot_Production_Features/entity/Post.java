@@ -1,20 +1,19 @@
 package com.example.SpringBoot_Production_Features.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+@Audited
+public class Post extends AuditableEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +21,13 @@ public class Post {
 
     private String title;
     private String description;
+
+    @PrePersist
+    public void prePersist() {}
+
+    @PreUpdate
+    public void preUpdate() {}
+
+    @PreRemove
+    public void preRemove() {}
 }
