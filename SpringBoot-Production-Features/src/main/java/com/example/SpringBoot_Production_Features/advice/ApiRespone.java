@@ -1,4 +1,4 @@
-package com.springweb.SpringWeb.advices;
+package com.example.SpringBoot_Production_Features.advice;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -6,23 +6,23 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ApiRespone<T>{
+public class ApiRespone<T> {
 
 //    @JsonFormat(pattern = "hh-mm-ss dd-MM-yyy")
     private LocalDateTime timestamps;
     private T data;
     private ApiError error;
 
-    public ApiRespone(){
+    public ApiRespone() {
         this.timestamps = LocalDateTime.now();
     }
 
-    public ApiRespone(T Data){
+    public ApiRespone(T Data) {
         this();
         this.data = Data;
     }
 
-    public ApiRespone(ApiError error){
+    public ApiRespone(ApiError error) {
         this();
         this.error = error;
     }
