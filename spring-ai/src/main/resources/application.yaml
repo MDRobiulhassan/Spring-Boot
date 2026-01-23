@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: spring-ai
+
+  ai:
+    vertex:
+      ai:
+        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
