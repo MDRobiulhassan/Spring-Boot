@@ -1,8 +1,10 @@
 spring:
   application:
     name: spring-ai
-
   ai:
-    vertex:
-      ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        options:
+          model: gpt-oss:120b-cloud
         
