@@ -22,6 +22,37 @@ public class AIService {
     private final EmbeddingModel embeddingModel;
     private final VectorStore vectorStore;
 
+    public static List<Document> springAiDocs() {
+
+        return List.of(
+
+                new Document(
+                        "Spring AI provides abstractions like ChatClient, ChatModel, and EmbeddingModel to interact with LLMs.",
+                        Map.of("topic", "ai")
+                ),
+
+                new Document(
+                        "A VectorStore is used to persist embeddings and perform similarity search for retrieval augmented generation.",
+                        Map.of("topic", "vectorstore")
+                ),
+
+                new Document(
+                        "Retrieval Augmented Generation combines vector similarity search with prompt augmentation to reduce hallucinations.",
+                        Map.of("topic", "vectorstore")
+                ),
+
+                new Document(
+                        "PgVectorStore stores embeddings inside PostgreSQL using the pgvector extension.",
+                        Map.of("topic", "vectorstore")
+                ),
+
+                new Document(
+                        "ChatClient provides a fluent API to send prompts to language models like OpenAI or Ollama.",
+                        Map.of("topic", "ai")
+                )
+        );
+    }
+
     public float[] getEmbedding(String text) {
         return embeddingModel.embed(text);
     }
@@ -47,6 +78,7 @@ public class AIService {
                 )
         );
         vectorStore.add(movies);
+        vectorStore.add(springAiDocs());
     }
 
     public List<Document> similaritySearch(String text) {
