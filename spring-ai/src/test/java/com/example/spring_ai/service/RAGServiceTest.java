@@ -20,4 +20,10 @@ public class RAGServiceTest {
     public void testIngest() {
         ragService.ingestPdfToVectorStore();
     }
+
+    @Test
+    public void testAskAIWithAdvisors() {
+        var response = ragService.askAIWithAdvisor("Tell me about sheikh hasina","robiul");
+        System.out.println(response);
+    }
 }

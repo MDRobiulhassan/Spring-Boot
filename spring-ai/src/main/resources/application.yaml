@@ -10,6 +10,12 @@ spring:
       embedding:
         options:
           model: nomic-embed-text-v2-moe:latest
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: always
+            table-name: chat_memory
 
     vectorstore:
       pgvector:

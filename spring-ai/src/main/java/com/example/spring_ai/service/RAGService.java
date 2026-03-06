@@ -1,8 +1,13 @@
 package com.example.spring_ai.service;
 
+import com.example.spring_ai.Advisor.TokenUsageAdvisor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
+import org.springframework.ai.chat.client.advisor.vectorstore.VectorStoreChatMemoryAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.reader.pdf.PagePdfDocumentReader;
@@ -23,6 +28,7 @@ public class RAGService {
 
     private final ChatClient chatClient;
     private final VectorStore vectorStore;
+    private final ChatMemory chatMemory;
 
     @Value("classpath:faq.pdf")
     Resource pdfFile;
@@ -56,6 +62,38 @@ public class RAGService {
                         Map.of("topic", "ai")
                 )
         );
+    }
+
+    public String askAIWithAdvisor(String prompt, String userId) {
+        return chatClient.prompt()
+                .system("""
+                        You are an AI assistant called Cody.
+                        Greet users with your name (cody) and the user name if you know their name.
+                        Answer questions in a friendly, conversational tone.
+                        """)
+                .user(prompt)
+                .advisors(
+//                        new SafeGuardAdvisor(List.of("hate", "violence", "discrimination", "politics", "gaming")),
+
+                        new TokenUsageAdvisor(),
+
+                        MessageChatMemoryAdvisor.builder(chatMemory)
+                                .conversationId(userId)
+                                .build(),
+
+                        VectorStoreChatMemoryAdvisor.builder(vectorStore)
+                                .conversationId(userId)
+                                .defaultTopK(4)
+                                .build(),
+
+                        QuestionAnswerAdvisor.builder(vectorStore)
+                                .searchRequest(SearchRequest.builder()
+                                        .filterExpression("file_name=='faq.pdf'")
+                                        .build())
+                                .build()
+                )
+                .call()
+                .content();
     }
 
     public String askAI(String prompt) {
