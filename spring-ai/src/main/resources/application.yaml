@@ -1,6 +1,10 @@
 spring:
   application:
     name: spring-ai
+
+  jpa:
+    hibernate:
+      ddl-auto: update
   ai:
     ollama:
       base-url: http://localhost:11434
@@ -30,4 +34,3 @@ spring:
 logging:
   level:
     org.springframework.ai.chat.client: DEBUG
-        
