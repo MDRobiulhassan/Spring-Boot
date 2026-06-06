@@ -1,12 +1,16 @@
 package com.example.AOP.serviceimpl;
 
+import com.example.AOP.aspect.MyLogging;
 import com.example.AOP.service.ShipmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
 public class ShipmentServiceImpl implements ShipmentService {
+
+    @MyLogging
     @Override
     public String orderPackage(Long orderId) {
         try {
@@ -19,6 +23,7 @@ public class ShipmentServiceImpl implements ShipmentService {
         return "Order placed successfully for order id: " + orderId;
     }
 
+    @MyLogging
     @Override
     public String trackPackage(Long orderId) {
         try {
