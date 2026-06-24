@@ -19,6 +19,9 @@ public class SalaryAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Version
+    private Long version;
+
     private BigDecimal balance;
 
     @OneToOne
