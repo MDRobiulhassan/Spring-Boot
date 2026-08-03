@@ -1,21 +1,31 @@
 package com.example.Thread;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.time.Instant;
 import java.util.concurrent.*;
 
 @SpringBootApplication
 @Slf4j
+@EnableScheduling
 public class ThreadApplication implements CommandLineRunner {
+
+    @Qualifier("taskScheduler")
+    @Autowired
+    private TaskScheduler taskScheduler;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         SpringApplication.run(ThreadApplication.class, args);
 //        learnFuture();
 //        learnCompletableFuture();
-        learnCF2();
+//        learnCF2();
 //        log.info("After Method Call");
     }
 
@@ -109,6 +119,9 @@ public class ThreadApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        taskScheduler.schedule(() -> {
+            log.info("Running Schedular Task");
+        }, Instant.ofEpochSecond(2));
 //        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4,
 //                600, 2, TimeUnit.SECONDS,
 //                new ArrayBlockingQueue<>(10),
