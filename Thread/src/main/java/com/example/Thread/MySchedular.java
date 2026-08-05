@@ -1,6 +1,7 @@
 package com.example.Thread;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -8,10 +9,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MySchedular {
 
-    @Scheduled(cron = "0 */5 * * * *")
+    @Scheduled(fixedRate = 200)
+    @Async("jobExecutor")
 //    @Scheduled(fixedDelay = 2000,initialDelay = 10000)
     void logMe() {
-        log.info("Schedular1 Started.....{}",Thread.currentThread().getName());
+        log.info("Schedular1 Started.....{}", Thread.currentThread().getName());
 
         try {
             Thread.sleep(1000);
@@ -19,7 +21,7 @@ public class MySchedular {
             throw new RuntimeException(e);
         }
 
-        log.info("Schedular1 Ended.......{}",Thread.currentThread().getName());
+        log.info("Schedular1 Ended.......{}", Thread.currentThread().getName());
     }
 
 //    @Scheduled(fixedRate = 1000)
