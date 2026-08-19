@@ -27,3 +27,8 @@ server:
   servlet:
     context-path: /api/v1
   port: 9010
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
