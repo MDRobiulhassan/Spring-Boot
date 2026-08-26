@@ -20,7 +20,7 @@ spring:
                 - Path=/api/v1/orders/**
               filters:
                 - StripPrefix=2
-                - RedirectTo=302, https://www.youtube.com
+#                - RedirectTo=302, https://www.youtube.com
 
 eureka:
   client:

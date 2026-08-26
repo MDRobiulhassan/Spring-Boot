@@ -6,10 +6,7 @@ import com.example.order_service.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +27,12 @@ public class OrderController {
     public ResponseEntity<?> getAllInventory() {
         List<OrderRequestDto> productDtoList = orderService.getAllOrders();
         return ResponseEntity.ok().body(productDtoList);
+    }
+
+    @PostMapping("/create-order")
+    public ResponseEntity<?> createOrder(@RequestBody OrderRequestDto orderRequestDto) {
+        OrderRequestDto createdOrder = orderService.createOrder(orderRequestDto);
+        return ResponseEntity.ok().body(createdOrder);
     }
 
     @GetMapping("/{id}")
