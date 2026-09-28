@@ -5,7 +5,7 @@ spring:
   cloud:
     gateway:
       server:
-        webmvc:
+        webflux:
           routes:
             - id: inventory-service
               uri: lb://inventory-service
@@ -14,13 +14,14 @@ spring:
               filters:
                 - StripPrefix=2
                 - AddRequestHeader=X-Custom-Header, CustomValue
+                - name: LoggingOrdersFilter
+
             - id: order-service
               uri: lb://order-service
               predicates:
                 - Path=/api/v1/orders/**
               filters:
                 - StripPrefix=2
-#                - RedirectTo=302, https://www.youtube.com
 
 eureka:
   client:
