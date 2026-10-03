@@ -15,6 +15,9 @@ spring:
                 - StripPrefix=2
                 - AddRequestHeader=X-Custom-Header, CustomValue
                 - name: LoggingOrdersFilter
+                - name : Authentication
+                  args:
+                    isEnabled: true
 
             - id: order-service
               uri: lb://order-service
@@ -22,6 +25,12 @@ spring:
                 - Path=/api/v1/orders/**
               filters:
                 - StripPrefix=2
+                - name: Authentication
+                  args:
+                    isEnabled: false
+                - name: Authorization
+                  args:
+                    allowedRoles: ADMIN,SUPER_ADMIN
 
 eureka:
   client:
@@ -30,3 +39,6 @@ eureka:
 
 server:
   port: 8080
+
+jwt:
+  secretKey: ${JWT_SECRET_KEY}
