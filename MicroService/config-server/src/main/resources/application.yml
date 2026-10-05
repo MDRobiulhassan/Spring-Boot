@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${GIT_REPO_URL}
+          username: ${GIT_REPO_USERNAME}
+          password: ${GIT_REPO_PASSWORD}
+          default-label: ${GIT_REPO_BRANCH}
+
+server:
+  port: 8888
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
