@@ -1,0 +1,19 @@
+{
+    "name": "UserCreatedEvent",
+    "namespace": "com.example.Kafka.event",
+    "type": "record",
+    "fields": [
+        {
+            "name": "id",
+            "type": "long"
+        },
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "email",
+            "type": "string"
+        }
+     ]
+}
